@@ -30,11 +30,11 @@ Thumbs.db
 *.log
 .env
 
-# Large datasets - too big for GitHub
+# Large datasets - too big for GitHub (updated.csv tracked via Git LFS)
 dataset.csv
-updated.csv
 updated_dataset.csv
-*.csv   # or just the big ones if you want smaller CSVs tracked
+*.csv
+!updated.csv
 
 veg.ipynb
 
