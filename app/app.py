@@ -1,4 +1,4 @@
-import sys, os, urllib.request
+import sys, os, urllib.request, threading
 
 # Absolute path to this file's directory (foodai/app/)
 _app_dir = os.path.dirname(os.path.abspath(__file__))
@@ -15,17 +15,23 @@ for _p in (_app_dir, _parent):
 # Change cwd to foodai/ so relative CSV reads work
 os.chdir(_parent)
 
-# ── Auto-download updated.csv from GitHub LFS if missing (Railway / CI) ──────
+# ── Non-blocking CSV download fallback (Railway downloads during build via nixpacks) ──
 _CSV_PATH = os.path.join(_parent, 'updated.csv')
 _CSV_URL  = "https://media.githubusercontent.com/media/Anoop1925/NutriVision/master/updated.csv"
 
-if not os.path.exists(_CSV_PATH):
-    print(f"[startup] updated.csv not found — downloading from GitHub LFS …", flush=True)
-    try:
-        urllib.request.urlretrieve(_CSV_URL, _CSV_PATH)
-        print(f"[startup] updated.csv downloaded ({os.path.getsize(_CSV_PATH)//1024//1024} MB)", flush=True)
-    except Exception as e:
-        print(f"[startup] WARNING: could not download updated.csv: {e}", flush=True)
+def _download_csv_bg():
+    if not os.path.exists(_CSV_PATH):
+        print("[startup] updated.csv not found — downloading in background …", flush=True)
+        try:
+            urllib.request.urlretrieve(_CSV_URL, _CSV_PATH)
+            print(f"[startup] updated.csv ready ({os.path.getsize(_CSV_PATH)//1024//1024} MB)", flush=True)
+        except Exception as e:
+            print(f"[startup] WARNING: could not download updated.csv: {e}", flush=True)
+    else:
+        print(f"[startup] updated.csv present ({os.path.getsize(_CSV_PATH)//1024//1024} MB)", flush=True)
+
+# Start in background — workers boot immediately; CSV is pre-downloaded during Railway build
+threading.Thread(target=_download_csv_bg, daemon=True).start()
 
 from flask import Flask
 from flask_cors import CORS

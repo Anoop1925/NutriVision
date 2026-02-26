@@ -1,10 +1,16 @@
 from pydantic import BaseModel, conlist
 from typing import List, Optional
-import pandas as pd
 from model import recommend, output_recommended_recipes
 
-# Load the dataset
-dataset = pd.read_csv('updated.csv')
+# Lazy-load the dataset — avoids blocking worker boot on Railway
+_dataset = None
+
+def get_dataset():
+    global _dataset
+    if _dataset is None:
+        import pandas as pd
+        _dataset = pd.read_csv('updated.csv')
+    return _dataset
 
 # Define the params model
 class ParamsModel(BaseModel):
@@ -56,7 +62,7 @@ class PredictionOut(BaseModel):
 
 def update_item(prediction_input: PredictionIn):
     recommendation_dataframe = recommend(
-        dataset,
+        get_dataset(),
         prediction_input.nutrition_input,
         prediction_input.ingredients,
         prediction_input.params.dict() if prediction_input.params else {},
