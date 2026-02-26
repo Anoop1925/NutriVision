@@ -1,0 +1,377 @@
+/* ═══════════════════════════════════════════════════════════
+   app.css — FoodAI premium styles (plain CSS — Tailwind CDN)
+   ═══════════════════════════════════════════════════════════ */
+
+html { scroll-behavior: smooth; }
+body {
+  font-feature-settings: "cv02","cv03","cv04","cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Buttons ──────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .75rem 1.5rem; border-radius: .75rem;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #fff; font-weight: 600; font-size: .875rem;
+  box-shadow: 0 8px 24px rgba(34,197,94,.25);
+  transition: all .2s ease;
+  border: none; cursor: pointer;
+}
+.btn-primary:hover {
+  box-shadow: 0 12px 32px rgba(34,197,94,.35);
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+}
+.btn-primary:active { transform: scale(.98); }
+.btn-primary:disabled { opacity: .6; cursor: not-allowed; }
+
+.btn-ghost {
+  display: inline-flex; align-items: center; gap: .5rem;
+  padding: .75rem 1.5rem; border-radius: .75rem;
+  background: rgba(255,255,255,.6); backdrop-filter: blur(12px);
+  border: 1px solid #e4e4e7; color: #18181b;
+  font-weight: 600; font-size: .875rem;
+  transition: all .2s ease; cursor: pointer; text-decoration: none;
+}
+.btn-ghost:hover { background: #fff; border-color: #d4d4d8; }
+.btn-ghost:active { transform: scale(.98); }
+
+/* ── Glassmorphism card ───────────────────────────────────── */
+.glass-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+}
+
+/* ── Feature cards ────────────────────────────────────────── */
+.feature-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+  transition: all .3s ease;
+}
+.feature-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+  transform: translateY(-4px);
+}
+.feature-icon {
+  width: 2.5rem; height: 2.5rem; border-radius: .75rem;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Section typography ───────────────────────────────────── */
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+.section-badge {
+  display: inline-block; padding: .25rem .75rem; border-radius: 9999px;
+  font-size: .75rem; font-weight: 700; letter-spacing: .1em; margin-bottom: 1rem;
+  border: 1px solid transparent;
+}
+.section-title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800; letter-spacing: -.02em; margin-bottom: .75rem;
+}
+.section-desc {
+  color: rgba(24,24,27,.5); max-width: 32rem; margin: 0 auto; line-height: 1.7;
+}
+
+/* ── Form controls ────────────────────────────────────────── */
+.input-group { display: flex; flex-direction: column; gap: .375rem; }
+.input-group label {
+  font-size: .75rem; font-weight: 600; letter-spacing: .04em;
+  color: rgba(24,24,27,.55);
+}
+.input {
+  width: 100%; border-radius: .75rem;
+  border: 1px solid #e4e4e7; background: #fff;
+  padding: .625rem 1rem; font-size: .875rem;
+  outline: none; transition: all .15s ease;
+}
+.input:focus {
+  border-color: #4ade80;
+  box-shadow: 0 0 0 3px rgba(74,222,128,.25);
+}
+select.input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m4 6 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  background-size: 1rem; padding-right: 2.5rem;
+}
+
+/* ── Nutrition slider ─────────────────────────────────────── */
+.slider-row { display: flex; flex-direction: column; gap: .25rem; }
+.slider-row .slider-head {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: .75rem; font-weight: 600; color: rgba(24,24,27,.55);
+}
+.slider-row input[type="range"] {
+  width: 100%; height: .375rem; border-radius: 9999px;
+  appearance: none; background: #f4f4f5; cursor: pointer;
+}
+.slider-row input[type="range"]::-webkit-slider-thumb {
+  appearance: none; width: 1rem; height: 1rem; border-radius: 50%;
+  background: #22c55e; border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(34,197,94,.3);
+  transition: transform .15s;
+}
+.slider-row input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.slider-row input[type="range"]::-moz-range-thumb {
+  width: 1rem; height: 1rem; border-radius: 50%;
+  background: #22c55e; border: 2px solid #fff;
+  box-shadow: 0 2px 6px rgba(34,197,94,.3);
+}
+
+/* ── Recipe card ──────────────────────────────────────────── */
+.recipe-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 0; overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+  transition: all .3s ease;
+}
+.recipe-card:hover {
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+  transform: translateY(-4px);
+}
+.recipe-img { width: 100%; height: 11rem; object-fit: cover; background: #f4f4f5; }
+.recipe-body { padding: 1.25rem; }
+.recipe-title {
+  font-weight: 600; font-size: 1rem; line-height: 1.35;
+  margin-bottom: .5rem;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.recipe-meta { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .75rem; }
+.pill {
+  font-size: .6875rem; font-weight: 600;
+  padding: .25rem .625rem; border-radius: .5rem;
+  background: #fafafa; color: #52525b;
+}
+
+/* ── Calorie plan card ────────────────────────────────────── */
+.calorie-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 2rem; text-align: center;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+  transition: all .2s;
+}
+.calorie-card:hover { box-shadow: 0 12px 32px rgba(0,0,0,.08); }
+.cal-label {
+  font-size: .75rem; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: rgba(24,24,27,.35); margin-bottom: .25rem;
+}
+.cal-value { font-size: 1.875rem; font-weight: 800; }
+.cal-unit { font-size: .875rem; font-weight: 500; color: rgba(24,24,27,.35); }
+
+/* ── Analyzer item card ───────────────────────────────────── */
+.analyzer-item {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 2rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+}
+.analyzer-item table { width: 100%; font-size: .875rem; border-collapse: collapse; }
+.analyzer-item th {
+  text-align: left; font-size: .75rem; font-weight: 600;
+  color: rgba(24,24,27,.35); text-transform: uppercase; letter-spacing: .06em;
+  padding-bottom: .5rem; border-bottom: 1px solid #f4f4f5;
+}
+.analyzer-item td { padding: .5rem 0; border-bottom: 1px solid #fafafa; }
+
+/* ── Toast ─────────────────────────────────────────────────── */
+.toast {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem 1.25rem; border-radius: .75rem;
+  background: #fff; box-shadow: 0 12px 40px rgba(0,0,0,.12);
+  border: 1px solid #f4f4f5;
+  font-size: .875rem; font-weight: 500; color: #18181b;
+  animation: slideUp .4s ease-out both;
+  pointer-events: auto;
+  transition: opacity .3s, transform .3s;
+}
+.toast.error { border-color: #fecaca; background: #fef2f2; color: #b91c1c; }
+.toast.success { border-color: #bbf7d0; background: #f0fdf4; color: #15803d; }
+
+/* ── Navbar ────────────────────────────────────────────────── */
+.nav-link {
+  font-size: .875rem; font-weight: 500;
+  color: rgba(24,24,27,.5); padding: .5rem .75rem; border-radius: .5rem;
+  position: relative; transition: color .2s; text-decoration: none;
+}
+.nav-link:hover { color: #16a34a; }
+.nav-link::after {
+  content: ""; position: absolute; bottom: 0; left: .75rem;
+  width: 0; height: 2px; background: #22c55e; border-radius: 1px;
+  transition: width .2s;
+}
+.nav-link:hover::after { width: calc(100% - 1.5rem); }
+
+.nav-scrolled {
+  background: rgba(255,255,255,.8);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 1px 12px rgba(0,0,0,.04);
+  border-bottom: 1px solid #f4f4f5;
+}
+
+/* ── Meal selector pills ──────────────────────────────────── */
+.meal-selector {
+  padding: .5rem 1rem; border-radius: .75rem;
+  font-size: .875rem; font-weight: 600; cursor: pointer;
+  background: #fafafa; color: #52525b;
+  border: 1px solid transparent;
+  transition: all .15s; display: inline-block;
+}
+.meal-selector:hover { background: #f0fdf4; color: #16a34a; }
+.meal-selector.active {
+  background: #22c55e; color: #fff;
+  box-shadow: 0 4px 16px rgba(34,197,94,.3);
+  border-color: #22c55e;
+}
+
+/* ── Drop zone active ─────────────────────────────────────── */
+.drop-active { border-color: #4ade80 !important; background: rgba(240,253,244,.5) !important; }
+
+/* ── Scrollbar ────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #e4e4e7; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #d4d4d8; }
+
+/* ── Nav pill tabs ─────────────────────────────────────────── */
+.nav-pill {
+  display: inline-flex; align-items: center; gap: .375rem;
+  font-size: .8125rem; font-weight: 500;
+  color: rgba(24,24,27,.5); padding: .4375rem .875rem;
+  border-radius: 9999px; text-decoration: none;
+  transition: all .2s ease; white-space: nowrap;
+}
+.nav-pill:hover { color: #18181b; background: rgba(24,24,27,.04); }
+.nav-pill-active {
+  display: inline-flex; align-items: center; gap: .375rem;
+  font-size: .8125rem; font-weight: 600;
+  color: #fff !important; padding: .4375rem .875rem;
+  border-radius: 9999px; text-decoration: none;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  box-shadow: 0 4px 14px rgba(34,197,94,.3);
+  white-space: nowrap;
+}
+
+/* ── Mobile menu links ────────────────────────────────────── */
+.mobile-link {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .625rem 1rem; border-radius: .75rem;
+  font-size: .875rem; font-weight: 500;
+  color: rgba(24,24,27,.6); text-decoration: none;
+  transition: all .15s ease;
+}
+.mobile-link:hover { background: #f4f4f5; color: #18181b; }
+.mobile-link-active {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .625rem 1rem; border-radius: .75rem;
+  font-size: .875rem; font-weight: 600;
+  background: #f0fdf4; color: #16a34a; text-decoration: none;
+}
+
+/* ── Small primary button (Sign In CTA) ───────────────────── */
+.btn-primary-sm {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .4375rem 1rem; border-radius: 9999px;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  color: #fff; font-weight: 600; font-size: .8125rem;
+  box-shadow: 0 4px 14px rgba(34,197,94,.2);
+  transition: all .2s ease;
+  border: none; cursor: pointer; text-decoration: none;
+}
+.btn-primary-sm:hover {
+  box-shadow: 0 6px 20px rgba(34,197,94,.35);
+  background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+}
+
+/* ── Login-gate overlay ───────────────────────────────────── */
+.auth-gate {
+  text-align: center; padding: 4rem 2rem;
+  max-width: 28rem; margin: 0 auto;
+}
+.auth-gate-icon {
+  width: 4rem; height: 4rem; border-radius: 1rem;
+  background: #f0fdf4; display: inline-flex;
+  align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Float animation for logo ─────────────────────────────── */
+@keyframes floating {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.animate-float { animation: floating 3s ease-in-out infinite; }
+
+/* ── Fade in ──────────────────────────────────────────────── */
+.animate-fade-in {
+  animation: fadeIn .6s ease-out both;
+}
+
+/* ── Animations ───────────────────────────────────────────── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes pulseSoft { 0%,100% { opacity: 1; } 50% { opacity: .7; } }
+
+/* ── Auth avatar ──────────────────────────────────────────── */
+.avatar-sm {
+  width: 2rem; height: 2rem; border-radius: 50%;
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #fff; font-weight: 700; font-size: .75rem;
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Stat card (home page) ────────────────────────────────── */
+.stat-card {
+  background: rgba(255,255,255,.72);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,.6);
+  border-radius: 1rem; padding: 1.5rem;
+  box-shadow: 0 8px 32px rgba(0,0,0,.04);
+  text-align: center; transition: all .3s;
+}
+.stat-card:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(0,0,0,.08); }
+
+/* ── Page header ──────────────────────────────────────────── */
+.page-header {
+  padding: 2.5rem 0 1.5rem;
+}
+.page-header h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -.02em; }
+.page-header p { color: rgba(24,24,27,.5); margin-top: .25rem; }
+
+/* ── ECharts container ────────────────────────────────────── */
+.chart-container {
+  width: 100%; min-height: 420px; border-radius: .75rem;
+  background: #fff; border: 1px solid #f4f4f5;
+  overflow: hidden;
+}
+
+/* ── Upload zone ──────────────────────────────────────────── */
+.upload-zone {
+  border: 2px dashed #e4e4e7; border-radius: 1rem;
+  padding: 3rem 2rem; text-align: center;
+  transition: all .2s; cursor: pointer;
+  background: rgba(255,255,255,.5);
+}
+.upload-zone:hover, .upload-zone.drop-active {
+  border-color: #4ade80; background: rgba(240,253,244,.5);
+}
+
+/* ── Status badges ────────────────────────────────────────── */
+.status-badge {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .25rem .75rem; border-radius: 9999px;
+  font-size: .75rem; font-weight: 600;
+}

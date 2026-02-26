@@ -1,0 +1,41 @@
+# Environments
+venv/
+diet_env/
+.venv/
+env/
+ENV/
+
+# Python / Jupyter junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Big stuff you don't want on GitHub
+frontend/
+assets/nutrition_kb/
+*.pt
+*.pth
+*.h5
+*.onnx
+*.bin
+*.safetensors
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+*.log
+.env
+
+# Large datasets - too big for GitHub
+dataset.csv
+updated.csv
+updated_dataset.csv
+*.csv   # or just the big ones if you want smaller CSVs tracked
+
+veg.ipynb
+
+content_based/

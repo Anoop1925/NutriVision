@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Food Analyzer{% endblock %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto px-6 pt-0 pb-16">
+
+  {% if not logged_in %}
+  <div class="auth-gate" data-aos="fade-up">
+    <div class="auth-gate-icon">
+      <i data-lucide="lock" class="w-6 h-6 text-violet-600"></i>
+    </div>
+    <h2 class="text-2xl font-bold mb-2">Sign in to access Food Analyzer</h2>
+    <p class="text-surface-500 text-sm mb-6">Upload a food photo and our AI will identify items and calculate nutrition instantly.</p>
+    <a href="/login" class="btn-primary inline-flex">
+      <i data-lucide="log-in" class="w-4 h-4"></i> Sign In
+    </a>
+  </div>
+
+  {% else %}
+
+  <!-- Page header -->
+  <div class="page-header" data-aos="fade-up">
+    <span class="section-badge bg-violet-100 text-violet-700 mb-3">FOOD ANALYZER</span>
+    <h1>Analyze Any Food Photo</h1>
+    <p>Upload an image and our AI will detect every food item, calculate nutrition, and assess health impact.</p>
+  </div>
+
+  <form id="analyzer-form" class="glass-card max-w-xl mx-auto text-center space-y-6" data-aos="fade-up" data-aos-delay="100">
+    <!-- Drop zone -->
+    <div id="drop-zone" class="upload-zone group relative">
+      <input type="file" id="food-image" accept="image/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" />
+      <div id="drop-placeholder" class="space-y-3">
+        <div class="mx-auto w-14 h-14 rounded-2xl bg-surface-100 flex items-center justify-center group-hover:bg-violet-100 transition-colors">
+          <i data-lucide="image-plus" class="w-6 h-6 text-surface-700/30 group-hover:text-violet-500 transition-colors"></i>
+        </div>
+        <p class="text-sm font-medium text-surface-700/50">Drop an image here or <span class="text-violet-500 font-semibold">browse</span></p>
+        <p class="text-xs text-surface-700/30">PNG, JPG up to 16 MB</p>
+      </div>
+      <img id="preview-img" class="hidden mx-auto max-h-64 rounded-xl" />
+    </div>
+
+    <button type="submit" class="btn-primary w-full justify-center">
+      <i data-lucide="scan-line" class="w-4 h-4"></i>
+      <span>Analyze Food</span>
+      <span id="analyzer-spinner" class="hidden"><svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg></span>
+    </button>
+  </form>
+
+  <div id="analyzer-results" class="hidden mt-12 space-y-8 max-w-4xl mx-auto">
+    <!-- Food items -->
+    <div id="analyzer-items" class="space-y-4"></div>
+    <!-- Grand total -->
+    <div id="analyzer-total" class="glass-card"></div>
+    <!-- Analyzer chart -->
+    <div id="analyzer-chart-wrap" class="hidden glass-card p-4">
+      <h4 class="text-sm font-semibold text-surface-500 mb-3 flex items-center gap-2">
+        <i data-lucide="pie-chart" class="w-4 h-4 text-violet-500"></i>
+        Grand Total — Nutrition Breakdown
+      </h4>
+      <div id="chart-analyzer" class="chart-container" style="height:320px"></div>
+    </div>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+{% block title %}Diet Plan{% endblock %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto px-6 pt-0 pb-16">
+
+  {% if not logged_in %}
+  <!-- Auth gate -->
+  <div class="auth-gate" data-aos="fade-up">
+    <div class="auth-gate-icon">
+      <i data-lucide="lock" class="w-6 h-6 text-brand-600"></i>
+    </div>
+    <h2 class="text-2xl font-bold mb-2">Sign in to access Diet Plan</h2>
+    <p class="text-surface-500 text-sm mb-6">Create personalized diet plans based on your body metrics and goals.</p>
+    <a href="/login" class="btn-primary inline-flex">
+      <i data-lucide="log-in" class="w-4 h-4"></i> Sign In
+    </a>
+  </div>
+
+  {% else %}
+
+  <!-- Page header -->
+  <div class="page-header" data-aos="fade-up">
+    <span class="section-badge bg-brand-100 text-brand-700 mb-3">DIET PLAN</span>
+    <h1>Personalized Diet Plan</h1>
+    <p>Fill in your details below to generate BMI, daily calorie targets, and a tailored meal plan.</p>
+  </div>
+
+  <!-- Form -->
+  <form id="diet-form" class="glass-card max-w-2xl mx-auto space-y-6" data-aos="fade-up" data-aos-delay="100">
+    <div class="grid sm:grid-cols-2 gap-5">
+      <div class="input-group">
+        <label for="d-age"><i data-lucide="calendar" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Age</label>
+        <input id="d-age" name="age" type="number" min="2" max="120" value="25" class="input" required />
+      </div>
+      <div class="input-group">
+        <label for="d-height"><i data-lucide="ruler" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Height (cm)</label>
+        <input id="d-height" name="height" type="number" min="50" max="300" value="170" class="input" required />
+      </div>
+      <div class="input-group">
+        <label for="d-weight"><i data-lucide="weight" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Weight (kg)</label>
+        <input id="d-weight" name="weight" type="number" min="10" max="300" value="70" class="input" required />
+      </div>
+      <div class="input-group">
+        <label for="d-gender"><i data-lucide="user" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Gender</label>
+        <select id="d-gender" name="gender" class="input">
+          <option>Male</option><option>Female</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="d-food"><i data-lucide="leaf" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Food Preference</label>
+        <select id="d-food" name="foodType" class="input">
+          <option>Veg</option><option>Non-Veg</option>
+        </select>
+      </div>
+      <div class="input-group">
+        <label for="d-meals"><i data-lucide="utensils" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Meals per day</label>
+        <select id="d-meals" name="meals" class="input">
+          <option value="3">3 meals</option>
+          <option value="4">4 meals</option>
+          <option value="5">5 meals</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="d-activity"><i data-lucide="activity" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Activity Level</label>
+      <select id="d-activity" name="activity" class="input">
+        <option>Little/no exercise</option>
+        <option>Light exercise</option>
+        <option>Moderate exercise (3-5 days/wk)</option>
+        <option>Very active (6-7 days/wk)</option>
+        <option>Extra active (very active &amp; physical job)</option>
+      </select>
+    </div>
+
+    <div class="input-group">
+      <label for="d-plan"><i data-lucide="target" class="w-3 h-3 inline -mt-0.5 mr-1 text-surface-400"></i>Weight Goal</label>
+      <select id="d-plan" name="plan" class="input">
+        <option>Maintain weight</option>
+        <option>Mild weight loss</option>
+        <option>Weight loss</option>
+        <option>Extreme weight loss</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn-primary w-full justify-center">
+      <i data-lucide="sparkles" class="w-4 h-4"></i>
+      <span>Generate Diet Plan</span>
+      <span id="diet-spinner" class="hidden"><svg class="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"/></svg></span>
+    </button>
+  </form>
+
+  <!-- Results -->
+  <div id="diet-results" class="hidden mt-16 space-y-16">
+
+    <!-- BMI -->
+    <div id="bmi-card" class="glass-card max-w-md mx-auto text-center" data-aos="zoom-in">
+      <p class="text-xs font-semibold tracking-widest uppercase text-surface-700/40 mb-2">Body Mass Index</p>
+      <p id="bmi-value" class="text-5xl font-extrabold"></p>
+      <span id="bmi-badge" class="inline-block mt-3 px-3 py-1 rounded-full text-sm font-semibold"></span>
+      <p class="text-xs text-surface-700/40 mt-3">Healthy range: 18.5 – 25 kg/m²</p>
+    </div>
+
+    <!-- Calorie Plans -->
+    <div data-aos="fade-up">
+      <h3 class="text-center text-xl font-bold mb-2">Daily Calorie Targets</h3>
+      <p class="text-center text-sm text-surface-700/50 mb-8">Estimates for maintaining, losing, or gaining weight.</p>
+      <div id="calorie-cards" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto"></div>
+    </div>
+
+    <!-- Charts: dual-axis line + sunburst -->
+    <div id="meal-charts" class="hidden space-y-12" data-aos="fade-up">
+      <div>
+        <h3 class="text-center text-xl font-bold mb-2">Nutrition Comparison</h3>
+        <p class="text-center text-sm text-surface-700/50 mb-6">Select meals to compare side by side.</p>
+        <div id="meal-selectors" class="flex flex-wrap justify-center gap-3 mb-8"></div>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="glass-card p-4">
+            <h4 class="text-sm font-semibold text-surface-500 mb-3 flex items-center gap-2">
+              <i data-lucide="trending-up" class="w-4 h-4 text-brand-500"></i>
+              Calories & Protein — Dual-Axis Line
+            </h4>
+            <div id="chart-calories" class="chart-container" style="height:440px"></div>
+          </div>
+          <div class="glass-card p-4">
+            <h4 class="text-sm font-semibold text-surface-500 mb-3 flex items-center gap-2">
+              <i data-lucide="pie-chart" class="w-4 h-4 text-violet-500"></i>
+              Nutrition Breakdown — Sunburst
+            </h4>
+            <div id="chart-nutrition" class="chart-container" style="height:440px"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Generating overlay -->
+    <div id="diet-generating" class="hidden text-center py-12 space-y-4">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-brand-100" style="animation: pulseSoft 1.5s ease-in-out infinite">
+        <i data-lucide="loader-2" class="w-7 h-7 text-brand-600 animate-spin"></i>
+      </div>
+      <p class="text-lg font-semibold text-surface-700">Generating meal recommendations…</p>
+      <p class="text-sm text-surface-700/50">This may take 15–30 seconds.</p>
+    </div>
+
+    <!-- Meal recommendations -->
+    <div id="meal-recommendations" class="hidden space-y-10"></div>
+  </div>
+
+  {% endif %}
+</div>
+
+{% endblock %}
