@@ -1,10 +1,22 @@
-import sys, os
+import sys, os, urllib.request
 
 # Change working directory to the parent (foodai/) so that existing modules
 # that do relative file reads (e.g. pd.read_csv('updated.csv')) work correctly.
 _parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 os.chdir(_parent)
 sys.path.insert(0, _parent)
+
+# ── Auto-download updated.csv from GitHub LFS if missing (Railway / CI) ──────
+_CSV_PATH = os.path.join(_parent, 'updated.csv')
+_CSV_URL  = "https://media.githubusercontent.com/media/Anoop1925/NutriVision/master/updated.csv"
+
+if not os.path.exists(_CSV_PATH):
+    print(f"[startup] updated.csv not found — downloading from GitHub LFS …", flush=True)
+    try:
+        urllib.request.urlretrieve(_CSV_URL, _CSV_PATH)
+        print(f"[startup] updated.csv downloaded ({os.path.getsize(_CSV_PATH)//1024//1024} MB)", flush=True)
+    except Exception as e:
+        print(f"[startup] WARNING: could not download updated.csv: {e}", flush=True)
 
 from flask import Flask
 from flask_cors import CORS

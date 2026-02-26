@@ -1,0 +1,15 @@
+# Exclude large dataset — downloaded at startup via GitHub LFS media URL
+updated.csv
+updated_dataset.csv
+dataset.csv
+
+# Dev stuff
+.venv/
+venv/
+__pycache__/
+*.pyc
+.git/
+*.ipynb
+veg.ipynb
+processing.ipynb
+cors/
