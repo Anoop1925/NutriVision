@@ -1,10 +1,19 @@
 import sys, os, urllib.request
 
-# Change working directory to the parent (foodai/) so that existing modules
-# that do relative file reads (e.g. pd.read_csv('updated.csv')) work correctly.
-_parent = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
+# Absolute path to this file's directory (foodai/app/)
+_app_dir = os.path.dirname(os.path.abspath(__file__))
+# Parent = foodai/ — where updated.csv, main.py, model.py etc. live
+_parent = os.path.abspath(os.path.join(_app_dir, '..'))
+
+# Add both directories to sys.path so all imports resolve
+# _app_dir  → makes 'routes', 'services' importable
+# _parent   → makes 'main', 'model', 'GenerateRecommendations' importable
+for _p in (_app_dir, _parent):
+    if _p not in sys.path:
+        sys.path.insert(0, _p)
+
+# Change cwd to foodai/ so relative CSV reads work
 os.chdir(_parent)
-sys.path.insert(0, _parent)
 
 # ── Auto-download updated.csv from GitHub LFS if missing (Railway / CI) ──────
 _CSV_PATH = os.path.join(_parent, 'updated.csv')
